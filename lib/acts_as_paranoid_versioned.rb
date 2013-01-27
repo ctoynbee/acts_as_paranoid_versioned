@@ -12,8 +12,8 @@ module ParanoidVersioned
       cattr_accessor :triggering_fields
       self.triggering_fields = options.delete(:triggered_by) || raise(ArgumentError, "triggered_by is mandatory")
 
-      before_validation(:on => :create) :init_start_date
-      before_validation(:on => :update) :create_new_paranoid_version, :if => :update_triggering_fields?
+      before_validation(:on => :create) { init_start_date }
+      before_validation(:on => :update) { create_new_paranoid_version if update_triggering_fields? }
     end
   end
 
